@@ -22,20 +22,37 @@
 #         conn.send(message.encode())
 #         # conn.send
 
-import asyncio
-import websockets
+# import asyncio
+# import websockets
 
-async def hello(websocket):
-    name= await websocket.recv()
-    print(name,"from clint")
-    greet ="hello" + name
-    await websocket.send(greet)
-    print("server",greet)
+# async def hello(websocket):
+#     name= await websocket.recv()
+#     print(name,"from clint")
+#     greet ="hello" + name
+#     await websocket.send(greet)
+#     print("server",greet)
 
-async def main():
-    async with websockets.serve(hello,"127.0.0.1",8765):
-        await asyncio.Future()
+# async def main():
+#     async with websockets.serve(hello,"127.0.0.1",8765):
+#         await asyncio.Future()
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+import sys
+from cefpython3 import cefpython as cef
+import pathlib
+
+file_path = "C:\Remote-Work\plancck\dist\index.html"
+file_uri = pathlib.Path(file_path).as_uri()
+
+def main():
+    sys.excepthook = cef.ExceptHook
+    cef.Initialize()
+    browser = cef.CreateBrowserSync(url=file_uri,window_title='CEF Python React Example')
+    cef.MessageLoop()
+    cef.Shutdown()
+
+if __name__ == '__main__':
+    main()
